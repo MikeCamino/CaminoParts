@@ -97,6 +97,14 @@ public abstract class SectionListAdapter extends BaseAdapter {
 		super.notifyDataSetInvalidated();
 	}
 	
+	/**
+	 * Returns list of generated headers
+		* @return
+	 */
+	public TreeMap<Integer, Object> getHeaders() {
+		return mHeaders;
+	}
+	
 	public boolean isHeader(int position) {
 		return mHeaders.containsKey(Integer.valueOf(position));
 	}
