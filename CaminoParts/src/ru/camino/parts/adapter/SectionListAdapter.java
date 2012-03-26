@@ -21,13 +21,14 @@ public abstract class SectionListAdapter extends BaseAdapter {
 	private SectionListAdapter.SectionDetector mSectionDetector;
 
 	public SectionListAdapter(BaseAdapter adapter) {
-		mSectionDetector = null;
-		init(adapter);
+		this(adapter, null);
 	}
 	
 	public SectionListAdapter(BaseAdapter adapter, SectionListAdapter.SectionDetector detector) {
 		mSectionDetector = detector;
-		init(adapter);
+		mAdapter = adapter;
+		mHeaderViewType = mAdapter.getViewTypeCount();
+		prepareHeaders();
 	}
 
 	@Override
@@ -124,12 +125,6 @@ public abstract class SectionListAdapter extends BaseAdapter {
 		* @return {@link Object} header to return to {@link SectionListAdapter.getSectionView} or <code>null</code> if header is not needed here
 	 */
 	protected abstract Object getSectionHeader(Object firstItem, Object secondItem);
-	
-	private void init(BaseAdapter adapter) {
-		mAdapter = adapter;
-		mHeaderViewType = mAdapter.getViewTypeCount();
-		prepareHeaders();
-	}
 	
 	private void prepareHeaders() {
 		mHeaders = new TreeMap<Integer, Object>();

@@ -7,17 +7,19 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class SimpleSectionListAdapter extends SectionListAdapter {
-	protected Context mContext;
-	protected int mHeaderLayoutId;
+	protected final Context mContext;
+	protected final int mHeaderLayoutId;
+	protected final int mTitleTextViewId;
 	
-	public SimpleSectionListAdapter(BaseAdapter a) {
-		super(a);
-	}
-	
-	public SimpleSectionListAdapter(Context context, BaseAdapter adapter, SectionListAdapter.SectionDetector detector, int headerLayoutId) {
+	public SimpleSectionListAdapter(Context context, BaseAdapter adapter, SectionListAdapter.SectionDetector detector, int headerLayoutId, int titleTextViewId) {
 		super(adapter, detector);
 		mContext = context;
 		mHeaderLayoutId = headerLayoutId;
+		mTitleTextViewId = titleTextViewId;
+	}
+	
+	public SimpleSectionListAdapter(Context context, BaseAdapter adapter, SectionListAdapter.SectionDetector detector, int headerLayoutId) {
+		this(context, adapter, detector, headerLayoutId, android.R.id.title);
 	}
 
 	@Override
@@ -28,7 +30,7 @@ public class SimpleSectionListAdapter extends SectionListAdapter {
 		} else {
 			v = View.inflate(mContext, mHeaderLayoutId, null);
 		}
-		((TextView) v.findViewById(android.R.id.title)).setText(header.toString());
+		((TextView) v.findViewById(mTitleTextViewId)).setText(header.toString());
 		
 		return v;
 	}
