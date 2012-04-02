@@ -1,12 +1,14 @@
 package ru.camino.parts.adapter;
 
+import java.util.Iterator;
 import java.util.TreeMap;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.SectionIndexer;
 
-public abstract class SectionListAdapter extends BaseAdapter {
+public abstract class SectionListAdapter extends BaseAdapter implements SectionIndexer {
 	public interface SectionDetector {
 		public Object detectSection(Object firstItem, Object secondItem);
 	}
@@ -96,7 +98,19 @@ public abstract class SectionListAdapter extends BaseAdapter {
 		
 		super.notifyDataSetInvalidated();
 	}
+
+	@Override
+	public boolean areAllItemsEnabled() {
+		return false;
+	}
 	
+	@Override
+	public boolean isEnabled(int position) {
+		return !isHeader(position);
+	}
+
+
+
 	/**
 	 * Returns list of generated headers
 		* @return
@@ -164,5 +178,48 @@ public abstract class SectionListAdapter extends BaseAdapter {
 	
 	private int getOriginalItemPosition(int position) {
 		return position - getHeadersCountToPos(position);
+	}
+
+
+
+
+	@Override
+	public int getPositionForSection(int section) {
+		final Iterator<Integer> iterator = getHeaders().keySet().iterator();
+
+		int count = 0;
+		int value = iterator.next();
+		while (iterator.hasNext()) {
+			if (section == count) {
+				break;
+			}
+
+			count ++;
+			value = iterator.next();
+		}
+
+		return value;
+	}
+
+	@Override
+	public int getSectionForPosition(int position) {
+		final Iterator<Integer> iterator = getHeaders().keySet().iterator();
+
+		int count = 0;
+		while (iterator.hasNext()) {
+			int value = iterator.next();
+			if (value == position) {
+				break;
+			}
+
+			count ++;
+		}
+
+		return count;
+	}
+
+	@Override
+	public Object[] getSections() {
+		return getHeaders().values().toArray();
 	}
 }
