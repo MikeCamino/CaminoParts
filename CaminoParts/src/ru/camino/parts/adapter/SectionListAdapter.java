@@ -191,14 +191,14 @@ public abstract class SectionListAdapter extends BaseAdapter implements SectionI
 		int value = iterator.next();
 		while (iterator.hasNext()) {
 			if (section == count) {
-				break;
+				return value;
 			}
 
 			count ++;
 			value = iterator.next();
 		}
 
-		return value;
+		return -1;
 	}
 
 	@Override
@@ -209,13 +209,13 @@ public abstract class SectionListAdapter extends BaseAdapter implements SectionI
 		while (iterator.hasNext()) {
 			int value = iterator.next();
 			if (value == position) {
-				break;
+				return count;
 			}
 
 			count ++;
 		}
 
-		return count;
+		return -1;
 	}
 
 	@Override
