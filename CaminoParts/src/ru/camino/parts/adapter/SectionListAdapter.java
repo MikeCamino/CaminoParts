@@ -198,9 +198,9 @@ public abstract class SectionListAdapter extends BaseAdapter implements SectionI
 
 	@Override
 	public int getSectionForPosition(int position) {
-		int count = 0;
+		int count = -1;
 		for (int key: getHeaders().keySet()) {
-			if (position >= key) {
+			if (position < key) {
 				return count;
 			}
 
