@@ -207,7 +207,7 @@ public abstract class SectionListAdapter extends BaseAdapter implements SectionI
 			count ++;
 		}
 
-		return -1;
+		return count;
 	}
 
 	@Override
