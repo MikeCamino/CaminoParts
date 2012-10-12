@@ -1,6 +1,5 @@
 package ru.camino.parts.adapter;
 
-import java.util.Iterator;
 import java.util.TreeMap;
 
 import android.view.View;
@@ -185,17 +184,13 @@ public abstract class SectionListAdapter extends BaseAdapter implements SectionI
 
 	@Override
 	public int getPositionForSection(int section) {
-		final Iterator<Integer> iterator = getHeaders().keySet().iterator();
-
 		int count = 0;
-		int value = iterator.next();
-		while (iterator.hasNext()) {
+		for (int key: getHeaders().keySet()) {
 			if (section == count) {
-				return value;
+				return key;
 			}
 
 			count ++;
-			value = iterator.next();
 		}
 
 		return -1;
@@ -203,12 +198,9 @@ public abstract class SectionListAdapter extends BaseAdapter implements SectionI
 
 	@Override
 	public int getSectionForPosition(int position) {
-		final Iterator<Integer> iterator = getHeaders().keySet().iterator();
-
-		int count = 0;
-		while (iterator.hasNext()) {
-			int value = iterator.next();
-			if (value == position) {
+		int count = -1;
+		for (int key: getHeaders().keySet()) {
+			if (position < key) {
 				return count;
 			}
 
